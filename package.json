@@ -1,6 +1,6 @@
 {
   "name": "@chriswa/ts-config",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Shared TypeScript and ESLint configuration for chriswa's projects",
   "type": "module",
   "main": "eslint.config.js",

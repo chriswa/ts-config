@@ -26,6 +26,10 @@
     "exactOptionalPropertyTypes": true,
     "noPropertyAccessFromIndexSignature": true,
     "useUnknownInCatchVariables": true,
-    "noImplicitReturns": true
+    "noImplicitReturns": true,
+
+    /* Decorator support */
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   }
 }

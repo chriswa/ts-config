@@ -10,6 +10,7 @@
   },
   "files": [
     "eslint.config.js",
+    "eslint.config.d.ts",
     "tsconfig.json",
     "README.md"
   ],

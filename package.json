@@ -1,6 +1,6 @@
 {
   "name": "@chriswa/ts-config",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Shared TypeScript and ESLint configuration for chriswa's projects",
   "type": "module",
   "main": "eslint.config.js",
@@ -21,6 +21,16 @@
   ],
   "author": "chriswa",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "publish-patch": "pnpm version patch && pnpm publish",
+    "publish-minor": "pnpm version minor && pnpm publish",
+    "publish-major": "pnpm version major && pnpm publish",
+    "preversion": "echo 'Preparing to version...'",
+    "postversion": "git push && git push --tags"
+  },
   "peerDependencies": {
     "eslint": "^9.0.0",
     "typescript": "^5.0.0"

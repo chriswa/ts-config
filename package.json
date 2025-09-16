@@ -1,0 +1,40 @@
+{
+  "name": "@chriswa/ts-config",
+  "version": "1.0.0",
+  "description": "Shared TypeScript and ESLint configuration for chriswa's projects",
+  "type": "module",
+  "main": "eslint.config.js",
+  "exports": {
+    "./eslint": "./eslint.config.js",
+    "./tsconfig": "./tsconfig.json"
+  },
+  "files": [
+    "eslint.config.js",
+    "tsconfig.json",
+    "README.md"
+  ],
+  "keywords": [
+    "eslint",
+    "typescript",
+    "config",
+    "linting"
+  ],
+  "author": "chriswa",
+  "license": "MIT",
+  "peerDependencies": {
+    "eslint": "^9.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@eslint/js": "^9.33.0",
+    "@stylistic/eslint-plugin": "^2.12.1",
+    "eslint-plugin-simple-import-sort": "^12.1.0",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-regexp": "^2.10.0",
+    "eslint-plugin-unicorn": "^60.0.0",
+    "globals": "^16.3.0",
+    "typescript-eslint": "^8.39.1"
+  }
+}

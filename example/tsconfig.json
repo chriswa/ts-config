@@ -1,0 +1,17 @@
+{
+  "extends": "@chriswa/ts-config/tsconfig",
+  "compilerOptions": {
+    /* Project-specific settings */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
+    /* Dependency injection support (optional) */
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "types": ["reflect-metadata"],
+    "useDefineForClassFields": false
+  },
+  "include": ["src"]
+}

@@ -16,8 +16,10 @@ export default tseslint.config(
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      parserOptions: { project: ['./tsconfig.json'] }, // enables type-aware rules
-      globals: globals.browser,
+      parserOptions: {
+        project: ['./tsconfig.json'],
+        tsconfigRootDir: process.cwd()
+      }, // enables type-aware rules
     },
     settings: {
       // Ensure eslint-plugin-import resolves TS path aliases (e.g., '@/...')

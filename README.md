@@ -12,27 +12,102 @@ pnpm add -D @chriswa/ts-config eslint typescript
 
 ## Usage
 
-### ESLint Configuration
+## Environment-Specific Setup
 
-Create an `eslint.config.js` file:
+### Browser Projects
 
+For browser-based projects (React, Vue, vanilla JS, etc.):
+
+**ESLint Configuration (`eslint.config.js`):**
 ```js
-import createConfig from '@chriswa/ts-config/eslint'
+import baseConfig from '@chriswa/ts-config/eslint'
+import globals from 'globals'
 
-export default createConfig({
-  // Optional customization
-  tsconfigPath: './tsconfig.json',     // Path to tsconfig.json
-  ignores: ['dist', 'coverage'],       // Files/patterns to ignore
-  browser: true,                       // Browser globals (default: true)
-  node: false,                         // Node globals (default: false)
-  enforcePathAliases: false,           // Disallow relative imports (default: false)
-})
+export default [
+  ...baseConfig,
+  {
+    languageOptions: {
+      globals: globals.browser
+    }
+  }
+]
 ```
 
-### TypeScript Configuration
+**TypeScript Configuration (`tsconfig.json`):**
+```json
+{
+  "extends": "@chriswa/ts-config/tsconfig",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src"]
+}
+```
 
-Create a `tsconfig.json` file:
+### CLI/Node Projects
 
+For command-line tools and Node.js applications:
+
+**ESLint Configuration (`eslint.config.js`):**
+```js
+import baseConfig from '@chriswa/ts-config/eslint'
+import globals from 'globals'
+
+export default [
+  ...baseConfig,
+  {
+    languageOptions: {
+      globals: globals.node
+    }
+  }
+]
+```
+
+**TypeScript Configuration (`tsconfig.json`):**
+```json
+{
+  "extends": "@chriswa/ts-config/tsconfig",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src"]
+}
+```
+
+### General Usage
+
+For basic usage without environment-specific globals:
+
+**ESLint Configuration (`eslint.config.js`):**
+```js
+import baseConfig from '@chriswa/ts-config/eslint'
+
+export default baseConfig
+```
+
+To customize rules:
+```js
+import baseConfig from '@chriswa/ts-config/eslint'
+
+export default [
+  ...baseConfig,
+  {
+    rules: {
+      'no-console': 'off', // Override specific rules
+    },
+  },
+]
+```
+
+**TypeScript Configuration (`tsconfig.json`):**
 ```json
 {
   "extends": "@chriswa/ts-config/tsconfig",

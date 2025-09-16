@@ -8,34 +8,25 @@ import globals from 'globals'
 import stylistic from '@stylistic/eslint-plugin'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 
-export default function createConfig(options = {}) {
-  const {
-    tsconfigPath = './tsconfig.json',
-    ignores = ['dist', 'coverage', '*.min.*'],
-    browser = true,
-    node = false,
-    enforcePathAliases = false,
-  } = options
+export default tseslint.config(
+  // 1) Ignore build artifacts
+  { ignores: ['dist', 'coverage', '*.min.*'] },
 
-  return tseslint.config(
-    // 1) Ignore build artifacts
-    { ignores },
-
-    // 2) Type-aware TS rules for src
-    {
-      files: ['**/*.{ts,tsx}'],
-      languageOptions: {
-        parserOptions: { project: [tsconfigPath] }, // enables type-aware rules
-        globals: browser ? globals.browser : node ? globals.node : globals.browser,
-      },
-      settings: {
-        // Ensure eslint-plugin-import resolves TS path aliases (e.g., '@/...')
-        'import/resolver': {
-          typescript: {
-            project: [tsconfigPath],
-          },
+  // 2) Type-aware TS rules for src
+  {
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      parserOptions: { project: ['./tsconfig.json'] }, // enables type-aware rules
+      globals: globals.browser,
+    },
+    settings: {
+      // Ensure eslint-plugin-import resolves TS path aliases (e.g., '@/...')
+      'import/resolver': {
+        typescript: {
+          project: ['./tsconfig.json'],
         },
       },
+    },
       plugins: { import: importPlugin, promise, unicorn, regexp, stylistic, 'simple-import-sort': simpleImportSort },
       extends: [
         eslint.configs.recommended,
@@ -97,20 +88,18 @@ export default function createConfig(options = {}) {
         'import/no-useless-path-segments': 'error',
         // Enforce alias usage via no-restricted-imports; disable this to avoid false positives with aliases
         'import/no-relative-parent-imports': 'off',
-        // Conditionally disallow relative imports if path aliases are enforced
-        ...(enforcePathAliases ? {
-          'no-restricted-imports': [
-            'error',
-            {
-              patterns: [
-                {
-                  group: ['^\\.'],
-                  message: 'Use @/ path alias instead of relative import.'
-                }
-              ]
-            }
-          ]
-        } : {}),
+        // Disallow relative imports - encourage path aliases
+        'no-restricted-imports': [
+          'error',
+          {
+            patterns: [
+              {
+                group: ['^\\.'],
+                message: 'Use @/ path alias instead of relative import.'
+              }
+            ]
+          }
+        ],
         'import/order': 'off',
         'simple-import-sort/imports': [
           'error',
@@ -183,4 +172,3 @@ export default function createConfig(options = {}) {
       languageOptions: { globals: { ...globals.node, ...globals.es2021 } },
     },
   )
-}
